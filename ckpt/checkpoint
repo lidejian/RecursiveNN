@@ -1,0 +1,2 @@
+model_checkpoint_path: "tree_rnn_weights"
+all_model_checkpoint_paths: "tree_rnn_weights"

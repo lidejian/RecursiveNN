@@ -54,17 +54,17 @@ def train(restore=False):
     data,vocab = utils.load_sentiment_treebank(DIR,config.fine_grained)
 
     train_set, dev_set, test_set = data['train'], data['dev'], data['test']
-    print 'train', len(train_set)
-    print 'dev', len(dev_set)
-    print 'test', len(test_set)
+    print(('train', len(train_set)))
+    print(('dev', len(dev_set)))
+    print(('test', len(test_set)))
 
     num_emb = len(vocab)
     num_labels = 5 if config.fine_grained else 3
-    for _, dataset in data.items():
+    for _, dataset in list(data.items()):
         labels = [label for _, label in dataset]
-        assert set(labels) <= set(xrange(num_labels)), set(labels)
-    print 'num emb', num_emb
-    print 'num labels', num_labels
+        assert set(labels) <= set(range(num_labels)), set(labels)
+    print(('num emb', num_emb))
+    print(('num labels', num_labels))
 
     config.num_emb=num_emb
     config.output_dim = num_labels
@@ -72,7 +72,7 @@ def train(restore=False):
     config.maxseqlen=utils.get_max_len_data(data)
     config.maxnodesize=utils.get_max_node_size(data)
 
-    print config.maxnodesize,config.maxseqlen ," maxsize"
+    print((config.maxnodesize,config.maxseqlen ," maxsize"))
     #return 
     random.seed()
     np.random.seed()
@@ -96,13 +96,13 @@ def train(restore=False):
 
             if restore:saver.restore(sess,'./ckpt/tree_rnn_weights')
             for epoch in range(config.num_epochs):
-                print 'epoch', epoch
+                print(('epoch', epoch))
                 avg_loss=0.0
                 avg_loss = train_epoch(model, train_set,sess)
-                print 'avg loss', avg_loss
+                print(('avg loss', avg_loss))
 
                 dev_score=evaluate(model,dev_set,sess)
-                print 'dev-scoer', dev_score
+                print(('dev-scoer', dev_score))
 
                 if dev_score > best_valid_score:
                     best_valid_score=dev_score
@@ -112,10 +112,10 @@ def train(restore=False):
                 if epoch -best_valid_epoch > config.early_stopping:
                     break
 
-                print "time per epochis {0}".format(
-                    time.time()-start_time)
+                print(("time per epochis {0}".format(
+                    time.time()-start_time)))
             test_score = evaluate(model,test_set,sess)
-            print test_score,'test_score'
+            print((test_score,'test_score'))
 
 def train_epoch(model,data,sess):
 

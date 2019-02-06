@@ -38,7 +38,7 @@ class tNode(object):
             root.height = max(root.get_left().height,root.get_right().height)+1
         else:
             root.height=1
-        print root.idx,root.height,'asa'
+        print((root.idx,root.height,'asa'))
 
     @staticmethod
     def get_size(root):
@@ -129,8 +129,8 @@ def test_tNode():
     postOrder(root,tNode.get_height,None)
     postOrder(root,tNode.get_numleaves,None)
     postOrder(root,root.get_spans,None)
-    print root.height,root.num_leaves
-    for n in nodes.itervalues():print n.span
+    print((root.height,root.num_leaves))
+    for n in nodes.values():print((n.span))
 
 if __name__=='__main__':
     test_tNode()

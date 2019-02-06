@@ -5,8 +5,12 @@ import tensorflow as tf
 import os
 import sys
 
-from tensorflow.python.ops import rnn_cell,rnn
+# from tensorflow.python.ops import rnn_cell,rnn
+from tensorflow.python.ops import rnn
+from tensorflow.contrib import rnn as rnn_cell
+
 from tf_data_utils import extract_seq_data
+
 
 
 class tf_seqLSTM(object):
@@ -135,7 +139,7 @@ class tf_seqLSTM(object):
 
         ts=tf.trainable_variables()
         gs=tf.gradients(loss,ts)
-        gs_ts=zip(gs,ts)
+        gs_ts=list(zip(gs,ts))
 
         gt_emb,gt_nn=[],[]
         for g,t in gs_ts:
